@@ -9,19 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        HStack(alignment: .bottom) {
-            Text("TOP")
+        VStack {
+            Text("First View")
                 .background(Color.red)
-            Text("ALIGNED")
+            Text("Second view")
                 .background(Color.blue)
-                .font(.largeTitle)
-            Text("TEXT")
-                .background(Color.green)
-                .font(.title)
-                
+            Spacer()
         }
-        .frame(height: 200)
-        .background(Color.gray)
     }
 }
 
