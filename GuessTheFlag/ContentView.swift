@@ -9,10 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 40) {
-            Text("Hello, World!")
-            Text("This is another stack view")
+        HStack(alignment: .bottom) {
+            Text("TOP")
+                .background(Color.red)
+            Text("ALIGNED")
+                .background(Color.blue)
+                .font(.largeTitle)
+            Text("TEXT")
+                .background(Color.green)
+                .font(.title)
+                
         }
+        .frame(height: 200)
+        .background(Color.gray)
     }
 }
 
