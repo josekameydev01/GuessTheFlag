@@ -9,17 +9,37 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-//        LinearGradient(colors: [.black, .white], startPoint: .top, endPoint: .bottom)
-//        LinearGradient(stops: [
-//            Gradient.Stop(color: .white, location: 0.20),
-//            Gradient.Stop(color: .black, location: 1),
-//        ], startPoint: .top, endPoint: .bottom)
-//        RadialGradient(colors: [.black, .white], center: .center, startRadius: 20, endRadius: 200)
-//        AngularGradient(colors: [.red, .yellow, .green, .blue, .purple, .red], center: .center)
-        Text("Your content")
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .foregroundStyle(.white)
-            .background(.green.gradient)
+        Button("Press me", role: .destructive, action: printSomething)
+        Button("Button 1") {}
+            .buttonStyle(.bordered)
+            .tint(.purple)
+        Button("Button 2") {}
+            .buttonStyle(.borderless)
+        Button("Button 3") {}
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
+        Button {
+            print("This button was tapped!")
+        } label: {
+            Text("Tap me")
+                .padding()
+                .foregroundStyle(.white)
+                .background(.red)
+        }
+        
+        Button {
+            print("Edit button was tapped!")
+        } label: {
+            Image(systemName: "pencil")
+        }
+        
+        Button("Edit", systemImage: "pencil") {
+            print("The edit button was taped")
+        }
+    }
+    
+    func printSomething() {
+        print("The button was tapped!")
     }
 }
 
