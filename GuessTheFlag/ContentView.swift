@@ -8,17 +8,45 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingAlert = false
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
+    @State private var correctAnswer = Int.random(in: 0...2)
+
     var body: some View {
-        Button("Show Alert") {
-            showingAlert = true
+        ZStack {
+            Color.gray
+                .ignoresSafeArea()
+            VStack(spacing: 30) {
+                VStack {
+                    Text("Tap the flag of")
+                        .foregroundStyle(.white)
+                    Text(countries[correctAnswer])
+                        .foregroundStyle(.white)
+                }
+                ForEach(0..<3) { number in
+                    Button {
+                        flagTapped(number)
+                    } label: {
+                        Image(countries[number])
+                    }
+                }
+            }
         }
-        .alert("Important Message", isPresented: $showingAlert) {
-            Button("Cancel", role: .cancel) { }
-            Button("Delete", role: .destructive) { }
+        .alert(scoreTitle, isPresented: $showingScore) {
+            Button("Continue", action: resetGame)
         } message: {
-            Text("Please read this information it is very important.")
+            Text("Your score is ???")
         }
+    }
+    
+    func flagTapped(_ number: Int) {
+        scoreTitle = number == correctAnswer ? "Correct" : "Wrong"
+        showingScore = true
+    }
+    func resetGame() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
     }
 }
 
