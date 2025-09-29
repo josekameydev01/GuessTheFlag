@@ -9,11 +9,15 @@ import SwiftUI
 
 struct FlagImage: View {
     var imageName: String
+    var rotationAmount: Double
+    var opacityAmount: Double
     
     var body: some View {
         Image(imageName)
             .clipShape(.circle)
             .shadow(radius: 7)
+            .rotation3DEffect(.degrees(rotationAmount), axis: (x: 0.0, y: 1, z: 0.0))
+            .opacity(opacityAmount)
     }
 }
 
@@ -25,6 +29,9 @@ struct ContentView: View {
     @State private var correctAnswer = Int.random(in: 0...2)
     @State private var score = 0
     @State private var questionNumber = 1
+    @State private var rotations = [0.0, 0.0, 0.0]
+    @State private var opacities = [1.0, 1.0, 1.0]
+
 
     var body: some View {
         ZStack {
@@ -49,8 +56,16 @@ struct ContentView: View {
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
+                            withAnimation(.easeInOut(duration: 1)) {
+                                rotations[number] += 360
+                            }
+                            withAnimation {
+                                for index in 0...2 {
+                                    opacities[index] = (number == index ? 1.0 : 0.25)
+                                }
+                            }
                         } label: {
-                            FlagImage(imageName: countries[number])
+                            FlagImage(imageName: countries[number], rotationAmount: rotations[number], opacityAmount: opacities[number])
                         }
                     }
                 }
@@ -98,6 +113,8 @@ struct ContentView: View {
     func getNextQuestion() {
         if questionNumber < 8 {
             countries.shuffle()
+            rotations = [0.0, 0.0, 0.0]
+            opacities = [1.0, 1.0, 1.0]
             correctAnswer = Int.random(in: 0...2)
             questionNumber += 1
         } else {
@@ -107,6 +124,8 @@ struct ContentView: View {
     func resetGame() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        rotations = [0.0, 0.0, 0.0]
+        opacities = [1.0, 1.0, 1.0]
         questionNumber = 1
         score = 0
         showingScore = false
